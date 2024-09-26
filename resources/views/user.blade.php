@@ -13,7 +13,6 @@
 </head>
 
 
-
 <div id="showUser"></div>
 
 
@@ -36,7 +35,7 @@ Add Donkk
 
                     <div class="form-group">
                       <label>name</label>
-                      <input type="text" class="form-control" name="name" id="idnama">
+                      <input type="text" class="form-control" name="name" id="idname">
                     </div>
 
                     <div class="form-group">
@@ -64,7 +63,7 @@ Add Donkk
             url: `/showUser`,
             method: 'GET',
         }).done(res => {
-            $('#showUser').html(res)
+            $('#showUser').html(res);
         })
     }
 
@@ -76,13 +75,13 @@ Add Donkk
             data: {
                 name:   $("#idname").val(),
                 hp:   $("#idhp").val(),
-                hp:   $("#iddid").val(),
+                id:   $("#idid").val(),
             },
             dataType: "JSON",
             success: function (RES) {
                 if (RES == 'SUCCESS') {
                     $('#staticBackdrop').modal('hide');
-                    showHewan();
+                    showUser();
                 }
             }
         });

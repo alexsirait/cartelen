@@ -33,7 +33,7 @@ class UserController extends Controller
             "id" => $id,
         ]);
 
-        return redirect('/user');
+        return response()->json('SUCCESS');
     }
 
     // delete
@@ -84,9 +84,7 @@ class UserController extends Controller
             $output = '';
             $data = DB::table('tbl_user')->get();
 
-            $output .=
-                '
-                <table class="table">
+            $output .= '<table class="table">
                     <thead>
                     <tr>
                         <th scope="col">name</th>
