@@ -17,10 +17,9 @@
 <div id="showHewan"></div>
 
 
-
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
 Add Donkk
-  </button>
+</button>
 
   <!-- Modal -->
   <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -56,6 +55,34 @@ Add Donkk
       </div>
     </div>
   </div>
+
+  {{-- modal edit --}}
+  <!-- Modal -->
+  <div class="modal fade" id="modalAkinEdit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <body>
+                <form action="/updatehewan" class="p-4">
+                    <div class="form-group">
+                      <label>name</label>
+                      <input type="hidden" class="form-control" name="id" id="idyangdisembunyikan">
+                      <input type="text" class="form-control" name="nama" id="namayangakandiedit">
+                      <input type="text" class="form-control" name="jenis" id="jenisyangakandiedit">
+                    </div>
+                    <button type="button" id="submiteditakin" class="btn btn-primary">Submit</button>
+                </form>
+            </body>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 </body>
 <script>
 
@@ -82,6 +109,48 @@ Add Donkk
             success: function (RES) {
                 if (RES == 'SUCCESS') {
                     $('#staticBackdrop').modal('hide');
+                    showHewan();
+                }
+            }
+        });
+    });
+
+    $(document).on('click', '.inibutonakinuntukbukamodal', function (e) {
+        $("#modalAkinEdit").modal('show');
+
+        $("#idyangdisembunyikan").val($(this).data('id'));
+        $("#namayangakandiedit").val($(this).data('nama'));
+        $("#jenisyangakandiedit").val($(this).data('jenis'));
+
+        $(document).on('click', '#submiteditakin', function (e) {
+            $.ajax({
+                type: "GET",
+                url: `/updatehewan`,
+                data: {
+                    id:   $("#idyangdisembunyikan").val(),
+                    nama:   $("#namayangakandiedit").val(),
+                    jenis:   $("#jenisyangakandiedit").val(),
+                },
+                dataType: "JSON",
+                success: function (RES) {
+                    if (RES == 'SUCCESS') {
+                        $('#modalAkinEdit').modal('hide');
+                        showHewan();
+                    }
+                }
+            });
+        });
+    });
+    $(document).on('click', '.iniadalahbuttonuntukmelakukandelete', function (e) {
+        $.ajax({
+            type: "GET",
+            url: `/deletehewan`,
+            data: {
+                id:   $(this).data('id'),
+            },
+            dataType: "JSON",
+            success: function (RES) {
+                if (RES == 'SUCCESS') {
                     showHewan();
                 }
             }

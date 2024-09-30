@@ -56,6 +56,34 @@ Add Donkk
     </div>
   </div>
 </body>
+
+  {{-- modal edit --}}
+  <!-- Modal -->
+  <div class="modal fade" id="modalAkinEdit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <body>
+                <form action="/update_user" class="p-4">
+                    <div class="form-group">
+                      <input type="hidden" class="form-control" name="id" id="idyangdisembunyikan">
+                      <input type="text" class="form-control" name="name" id="namayangakandiedit">
+                      <input type="text" class="form-control" name="hp" id="jenisyangakandiedit">
+                    </div>
+                    <button type="button" id="submiteditakin" class="btn btn-primary">Submit</button>
+                </form>
+            </body>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</body>
 <script>
 
     function showUser() {
@@ -86,5 +114,50 @@ Add Donkk
             }
         });
     });
+
+    $(document).on('click', '.inibutonakinuntukbukamodal', function (e) {
+        $("#modalAkinEdit").modal('show');
+
+        $("#idyangdisembunyikan").val($(this).data('id'));
+        $("#namayangakandiedit").val($(this).data('name'));
+        $("#jenisyangakandiedit").val($(this).data('hp'));
+
+        $(document).on('click', '#submiteditakin', function (e) {
+            $.ajax({
+                type: "GET",
+                url: `/update_user`,
+                data: {
+                    id:   $("#idyangdisembunyikan").val(),
+                    name:   $("#namayangakandiedit").val(),
+                    hp:   $("#jenisyangakandiedit").val(),
+                },
+                dataType: "JSON",
+                success: function (RES) {
+                    if (RES == 'SUCCESS') {
+                        $('#modalAkinEdit').modal('hide');
+                        showUser();
+                    }
+                }
+            });
+        });
+    });
+
+
+    $(document).on('click', '.iniadalahbuttonuntukmelakukandelete', function (e) {
+        $.ajax({
+            type: "GET",
+            url: `/deleteuser`,
+            data: {
+                id:   $(this).data('id'),
+            },
+            dataType: "JSON",
+            success: function (RES) {
+                if (RES == 'SUCCESS') {
+                    showUser();
+                }
+            }
+        });
+    });
+</script>
 </script>
 </html>

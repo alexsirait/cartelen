@@ -43,7 +43,7 @@ class UserController extends Controller
 
         DB::table('tbl_user')->where("id", $id)->delete();
 
-        return redirect('/user');
+        return response()->json('SUCCESS');
     }
 
 
@@ -68,12 +68,15 @@ class UserController extends Controller
     {
         $id = $r->id;
         $name = $r->name;
+        $hp = $r->hp;
 
         DB::table('tbl_user')->where("id", $id)->update([
             "name" => $name,
+            "hp" => $hp,
+
         ]);
 
-        return redirect('/user');
+        return response()->json('SUCCESS');
 
 
     }
@@ -103,8 +106,8 @@ class UserController extends Controller
                         <td>'.$us->hp.'</td>
                         <td>'.$us->id.'</td>
                         <td>
-                            <a class="btn btn-primary" href="/edituser?id='.$us->id.'">Edit</a>
-                            <a class="btn btn-danger" href="/deleteuser?id='.$us->id.'">Delete</a>
+                            <a class="btn btn-primary inibutonakinuntukbukamodal" data-name="'.$us->name.'" data-hp="'.$us->hp.'" data-id="'.$us->id.'">Edit</a>
+                            <a class="btn btn-danger iniadalahbuttonuntukmelakukandelete" data-id="'.$us->id.'">Delete</a>
                         </td>s
                     </tr>
                 ';

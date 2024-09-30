@@ -43,7 +43,7 @@ public function deletehewan(Request $r)
 
     DB::table('tbl_hewan')->where("id", $id)->delete();
 
-    return redirect('/hewan');
+    return response()->json('SUCCESS');
 }
 
 
@@ -72,7 +72,7 @@ public function deletehewan(Request $r)
             "jenis" => $jenis
         ]);
 
-        return redirect('/hewan');
+        return response()->json('SUCCESS');
     }
 
     public function showHewan(Request $req)
@@ -102,8 +102,8 @@ public function deletehewan(Request $r)
                         <td>'.$us->nama.'</td>
                         <td>'.$us->jenis.'</td>
                         <td>
-                            <a class="btn btn-primary" href="/edithewan?id='.$us->id.'">Edit</a>
-                            <a class="btn btn-danger" href="/deletehewan?id='.$us->id.'">Delete</a>
+                            <a class="btn btn-primary inibutonakinuntukbukamodal" data-id="'.$us->id.'" data-nama="'.$us->nama.'" data-jenis="'.$us->jenis.'">Edit</a>
+                            <a class="btn btn-danger iniadalahbuttonuntukmelakukandelete" data-id="'.$us->id.'">Delete</a>
                         </td>
                     </tr>
                 ';
